@@ -1,0 +1,29 @@
+.content {
+  max-width: 20rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-inner);
+  background: var(--background);
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  z-index: 40;
+  /* 툴팁 안에서는 줄바꿈을 막지 않는다 — 계산식이 길다 */
+  word-break: keep-all;
+}
+
+.arrow {
+  fill: var(--background);
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+  cursor: help;
+}
+
+.trigger:hover {
+  color: var(--accent);
+}

@@ -1,0 +1,180 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+/* ── 헤더 ────────────────────────────────────────────────────────────────── */
+
+.season {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.title {
+  margin-top: var(--space-1);
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.count {
+  margin-top: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ── 컨트롤 ──────────────────────────────────────────────────────────────── */
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  height: var(--control-h-sm);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums lining-nums;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--border-hover);
+  color: var(--foreground);
+}
+
+/* 활성 칩은 브랜드 골드를 면으로 쓴다. 라이트에서 골드는 선으로 쓸 수 없다. */
+.chipActive,
+.chipActive:hover {
+  background: var(--primary);
+  border-color: transparent;
+  color: var(--primary-foreground);
+  font-weight: var(--weight-semibold);
+}
+
+.searchRow {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ── 카드 그리드 ─────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-panel);
+  background: var(--surface-faint);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--border-medium);
+  background: var(--surface-card);
+}
+
+.number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: var(--weight-display);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.name {
+  font-size: var(--fs-lead);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-snug);
+}
+
+.meta {
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* 영구결번은 브랜드 골드로 구분한다. 팀에서 가장 명예로운 표시다. */
+.badgeRetired {
+  border-color: var(--primary);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-normal);
+}
+
+.cardRetired .number {
+  color: var(--primary);
+}
+
+/* ── 로딩 스켈레톤 ───────────────────────────────────────────────────────── */
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-panel);
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .number {
+    font-size: 2rem;
+  }
+}

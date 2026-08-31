@@ -1,0 +1,266 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+.season {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.title {
+  margin-top: var(--space-1);
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.tabsRow {
+  margin-top: var(--space-5);
+}
+
+.panel {
+  margin-top: var(--space-5);
+}
+
+/* ── 포디움 ──────────────────────────────────────────────────────────────
+   메달 색은 디자인 토큰이 아니라 이 화면 전용이다. 두 테마 각각에서
+   배경 대비 4.5:1 을 넘는 값으로 계산해 넣었다. */
+
+.podiums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.podiumSection {
+  --medal-1: #7c621f;
+  --medal-2: #5e6771;
+  --medal-3: #93532d;
+}
+
+:global(html[data-theme='dark']) .podiumSection {
+  --medal-1: #d0b473;
+  --medal-2: #aeb9c4;
+  --medal-3: #eca57d;
+}
+
+.podiumHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.podiumTitle {
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.podiumCriteria {
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.podiumCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-panel);
+  background: var(--surface-faint);
+}
+
+.rank1 { color: var(--medal-1); }
+.rank2 { color: var(--medal-2); }
+.rank3 { color: var(--medal-3); }
+
+.medalLabel {
+  padding: 1px 8px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* 등번호 방패 */
+.shield {
+  position: relative;
+  width: 52px;
+  height: 60px;
+}
+
+.shieldSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.shieldNumber {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: var(--weight-display);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.podiumName {
+  color: var(--foreground);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.podiumStat {
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.podiumEmpty {
+  border: 1px dashed var(--border-dim);
+  border-radius: var(--radius-panel);
+  min-height: 150px;
+}
+
+/* ── 필터 ────────────────────────────────────────────────────────────────── */
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+/* ── 테이블 ──────────────────────────────────────────────────────────────
+   둥근 모서리와 sticky 를 함께 쓰기 위해 두 겹으로 나눈다.
+
+   - .tableFrame  모서리를 자른다. overflow: clip 은 hidden 과 달리
+                  스크롤 컨테이너를 만들지 않아 안쪽 sticky 를 방해하지 않는다
+   - .tableScroll 실제 가로 스크롤. 이름 열의 sticky 는 이 컨테이너 기준이다
+
+   ※ 가로 스크롤 컨테이너 안에서는 헤더를 페이지 기준으로 sticky 시킬 수 없다.
+     한 축을 auto 로 두면 다른 축도 스크롤 컨테이너가 되기 때문이다(CSS 사양).
+     모바일에서 더 중요한 것은 이름 열 고정이라 그쪽을 택했다. */
+
+.tableFrame {
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  overflow: clip;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: center;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.headerCell {
+  position: relative;
+  background: var(--surface-card);
+  color: var(--text-tertiary);
+  font-family: var(--font-display);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+.headerCell:hover {
+  color: var(--foreground);
+}
+
+.sortMark {
+  margin-left: 4px;
+  color: var(--accent);
+}
+
+/* 이름 열 고정. 가로로 밀 때 누가 누구인지 잃지 않게 한다. */
+.nameCell {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  text-align: left;
+  font-weight: var(--weight-medium);
+  /* 스크롤되는 셀이 뒤로 비쳐 보이면 안 되므로 불투명 배경이 필요하다.
+     배경은 하나뿐이므로 반투명 층을 그 위에 겹쳐 만든다. */
+  background: var(--background);
+}
+
+.nameCell::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-dim);
+}
+
+.headerCell.nameCell {
+  background: linear-gradient(var(--surface-card), var(--surface-card)), var(--background);
+  z-index: 2;
+}
+
+.table tbody tr:hover td {
+  background: var(--surface-hover);
+}
+
+.table tbody tr:hover .nameCell {
+  background: linear-gradient(var(--surface-hover), var(--surface-hover)), var(--background);
+}
+
+@media (max-width: 768px) {
+  .podium {
+    gap: var(--space-1);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-2);
+  }
+}

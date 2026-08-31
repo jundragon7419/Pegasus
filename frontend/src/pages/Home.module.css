@@ -1,0 +1,247 @@
+.page {
+  flex: 1;
+  width: 100%;
+}
+
+/* ── 히어로 ──────────────────────────────────────────────────────────────
+   "THINK WIN / PLAY WIN" 문구가 이미지 안에 박혀 있다. 어느 방향으로든
+   잘리면 문구가 깨지므로, 컨테이너 비율을 이미지에 맞춰 고정한다.
+
+   이미지 원본은 1317×550 이고 글자 블록은 y 46~480 이다.
+   위 여백 46px, 아래 여백 69px 로 **콘텐츠가 12px 위로 치우쳐 있다.**
+   아래쪽 23px 를 잘라내면 위아래 여백이 46px 로 같아진다.
+
+   그래서 컨테이너 비율을 1317 : (550-23) = 1317 : 527 로 두고
+   object-position 을 top 으로 밀어 **잘림을 전부 아래로 보낸다.**
+   이러면 어느 화면 폭에서도 상하 여백이 같고 문구는 잘리지 않는다.
+
+   min-height / max-height 는 두지 않는다. 높이를 강제하면 비율이 어긋나
+   좌우나 상하가 잘린다(실제로 모바일에서 글자 양끝이 잘렸다). */
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1317 / 527;
+  overflow: hidden;
+  /* 이미지가 오기 전 공백이 튀지 않도록 이미지 가장자리와 같은 계열로 채운다 */
+  background: #011126;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ── 본문 ────────────────────────────────────────────────────────────────── */
+
+.content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-snug);
+}
+
+.moreLink {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+}
+
+.moreLink:hover {
+  color: var(--accent);
+}
+
+/* ── 게시판 위젯 ─────────────────────────────────────────────────────────── */
+
+.postList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-panel);
+  overflow: clip;
+}
+
+.postRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-faint);
+  color: var(--foreground);
+}
+
+.postRow:last-child {
+  border-bottom: none;
+}
+
+.postRow:hover {
+  background: var(--surface-hover);
+  text-decoration: none;
+}
+
+/* 고정글 구간과 일반글 구간을 가르는 선. 구 사이트도 이 구분을 두었다. */
+.pinnedDivider {
+  border-bottom: 2px solid var(--border-medium);
+}
+
+.postType {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.postTypeNotice {
+  border-color: var(--primary);
+  color: var(--accent);
+}
+
+.postTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+}
+
+.postDate {
+  flex: none;
+  color: var(--text-meta);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ── 미니 캘린더 ─────────────────────────────────────────────────────────── */
+
+.calendar {
+  display: block;
+  width: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-panel);
+  background: var(--surface-faint);
+  text-align: left;
+}
+
+.calendar:hover {
+  border-color: var(--border-medium);
+  text-decoration: none;
+}
+
+.calendarMonth {
+  font-family: var(--font-display);
+  font-size: var(--fs-lead);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--foreground);
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  margin-top: var(--space-3);
+}
+
+.dayLabel {
+  padding-bottom: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  text-align: center;
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+  min-height: 34px;
+  padding-top: 3px;
+  border-radius: var(--radius-inner);
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.cellEmpty {
+  visibility: hidden;
+}
+
+/* 일요일과 공휴일 */
+.cellRed {
+  color: var(--negative);
+}
+
+.cellToday {
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-weight: var(--weight-bold);
+}
+
+.dots {
+  display: flex;
+  gap: 2px;
+  height: 4px;
+}
+
+/* 미니 캘린더는 일정 유형을 색으로 구분하지 않는다.
+   셀이 30px 남짓이라 4색 점은 서로 분간되지 않는다.
+   "일정 있음"만 알리고 유형 구분은 /schedule 에서 라벨로 보여준다. */
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+}
+
+.dotHoliday {
+  background: var(--negative);
+}
+
+.calendarLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
