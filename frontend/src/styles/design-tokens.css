@@ -11,6 +11,13 @@
    3. 알파 파생 토큰은 알파가 아니라 "대비비"를 테마 간에 맞춘다.
       라이트는 다크보다 약 1.3~1.4배 높은 알파가 필요하다.
 
+   폰트: Pretendard(한글·라틴 본문) + Archivo(숫자·영문 디스플레이).
+   한글 필수 규칙 — word-break: keep-all + overflow-wrap: break-word 를 body 에 건다.
+   숫자 정렬이 필요한 곳(스탯 테이블·등번호)에는 font-variant-numeric: tabular-nums.
+
+   브레이크포인트 (CSS 변수로 만들 수 없다 — @media 는 var() 를 읽지 못한다):
+     sm 480px / md 768px / lg 1024px / xl 1280px  ← 각 CSS Module 에 직접 쓴다
+
    반경: 작은 컨트롤은 pill(9999px), 면은 20px. Radix Themes 의 radius="full" 인상을
    따르되, 완전 둥근 형태가 성립하지 않는 요소(여러 줄 입력·테이블)는 분리했다.
 
@@ -57,6 +64,66 @@
   --radius-field:          12px;   /* 여러 줄 입력·테이블/스크롤 컨테이너 (pill 불가) */
   --radius-inner:          8px;   /* 둥근 컨테이너 안에 중첩되는 요소 */
   --radius-tight:          4px;   /* 인디케이터 등 작은 요소 */
+
+  /* ── 폰트 ──
+     Pretendard 는 Google Fonts 에 없다. jsDelivr CDN 또는 자체 호스팅으로 로드하고,
+     한글 웹폰트는 용량이 크므로 반드시 서브셋(dynamic subset) 버전을 쓴다.
+     Archivo 는 숫자·영문 전용(등번호·스탯·대문자 제목). 한글은 지원하지 않는다. */
+  --font-sans:             'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-display:          Archivo, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+
+  /* 크기 — 모바일 우선. clamp 는 뷰포트에 따라 유동적으로 커진다 */
+  --fs-meta:               0.75rem;   /* 12px — 타임스탬프·보조 라벨 */
+  --fs-sm:                 0.875rem;   /* 14px — 테이블 셀·부가 정보 */
+  --fs-body:               1rem;   /* 16px — 본문 기준. 이보다 작게 쓰지 않는다 */
+  --fs-lead:               1.125rem;   /* 18px — 리드 문단 */
+  --fs-title-sm:           1.25rem;   /* 20px — 카드 제목 */
+  --fs-title:              clamp(1.375rem, 1vw + 1.125rem, 1.75rem);   /* 22 → 28px */
+  --fs-page:               clamp(1.75rem, 2.5vw + 1.25rem, 2.5rem);   /* 28 → 40px — 페이지 제목 */
+  --fs-display:            clamp(2.5rem, 6vw + 1rem, 4.5rem);   /* 40 → 72px — 히어로·등번호 */
+
+  /* 행간 — 한글은 라틴보다 넓어야 한다 (본문 1.65) */
+  --lh-display:            1.05;
+  --lh-tight:              1.25;   /* 제목 */
+  --lh-snug:               1.45;   /* 리드·카드 제목 */
+  --lh-body:               1.65;   /* 본문 */
+  --lh-ui:                 1.2;   /* 버튼·배지 — 수직 중앙 정렬용 */
+
+  /* 자간 */
+  --tracking-display:      0.01em;   /* 컨덴스드 대문자는 양수 자간이 필요하다 */
+  --tracking-tight:        -0.02em;   /* 큰 한글 제목 */
+  --tracking-normal:       0;
+  --tracking-wide:         0.06em;   /* 작은 대문자 라벨 */
+
+  /* 굵기 */
+  --weight-regular:        400;
+  --weight-medium:         500;
+  --weight-semibold:       600;
+  --weight-bold:           700;
+  --weight-display:        800;
+
+  /* 간격 — 4px 배수 */
+  --space-1:               0.25rem;   /* 4px */
+  --space-2:               0.5rem;   /* 8px */
+  --space-3:               0.75rem;   /* 12px */
+  --space-4:               1rem;   /* 16px */
+  --space-5:               1.5rem;   /* 24px */
+  --space-6:               2rem;   /* 32px */
+  --space-7:               3rem;   /* 48px */
+  --space-8:               4rem;   /* 64px */
+
+  /* 컨트롤 — pill 은 가로 여백이 높이의 절반 이상이어야 글자가 안 눌린다.
+     기본 높이 44px 는 모바일 최소 터치 타깃 크기다. */
+  --control-h-sm:          36px;   /* 데스크톱 밀집 영역(테이블 행 액션) */
+  --control-h:             44px;   /* 기본 — 터치 타깃 최소치 */
+  --control-h-lg:          52px;   /* 주요 CTA */
+  --control-px-sm:         20px;
+  --control-px:            24px;
+  --control-px-lg:         30px;
+
+  /* 레이아웃 */
+  --content-max:           1200px;
+  --content-pad:           var(--space-4);   /* 모바일 좌우 여백 */
 }
 
 :root[data-theme="light"] {
