@@ -1,0 +1,129 @@
+/* =============================================================================
+   전역 스타일
+
+   design-tokens.css 는 값만 정의한다. 그 값을 실제로 적용하는 것이 이 파일이다.
+   컴포넌트 스타일은 전부 CSS Modules 로 작성하며, 여기에는 문서 전체에
+   해당하는 것만 둔다.
+   ============================================================================= */
+
+@import './design-tokens.css';
+
+/* ── reset ───────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ── 문서 ────────────────────────────────────────────────────────────────── */
+
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+
+  /* 한글 필수 규칙.
+     keep-all 이 없으면 브라우저가 어절 중간에서 줄을 끊는다.
+     그것만 쓰면 긴 URL 이 컨테이너를 뚫으므로 overflow-wrap 을 함께 건다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 요소 기본값 ─────────────────────────────────────────────────────────── */
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* 키보드 사용자에게만 포커스 링을 보인다. --accent 는 두 테마 모두에서
+   배경 대비 3:1 을 넘는 것이 검증되어 있다. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── 최소한의 전역 유틸 ──────────────────────────────────────────────────── */
+
+/* 숫자 열을 세로로 맞춰야 하는 곳(스탯 테이블·등번호·날짜)에 붙인다. */
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+
+/* 시각적으로는 감추되 스크린리더에는 읽히게 한다. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── 접근성: 모션 최소화 설정 존중 ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

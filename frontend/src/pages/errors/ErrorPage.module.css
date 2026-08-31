@@ -1,0 +1,55 @@
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--content-pad);
+  text-align: center;
+}
+
+/* 숫자는 디스플레이 폰트로 크게. 무슨 오류인지 한눈에 들어오는 것이 목적이다. */
+.code {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.title {
+  font-size: var(--fs-title);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.description {
+  max-width: 34rem;
+  color: var(--text-secondary);
+  line-height: var(--lh-body);
+}
+
+.detail {
+  max-width: 34rem;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  background: var(--surface-faint);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-2);
+}

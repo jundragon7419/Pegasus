@@ -1,0 +1,111 @@
+/* design-tokens.preview.html 에서 검증한 버튼 체계를 컴포넌트로 옮긴 것이다.
+   pill 반경이라 가로 여백이 높이의 절반을 넘어야 글자가 눌리지 않는다
+   (--control-px-* 가 그 값이다). */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--control-h);
+  padding: 0 var(--control-px);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--weight-semibold);
+  line-height: var(--lh-ui);
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── 크기 ────────────────────────────────────────────────────────────────── */
+
+.sm {
+  height: var(--control-h-sm);
+  padding: 0 var(--control-px-sm);
+  font-size: var(--fs-sm);
+}
+
+.lg {
+  height: var(--control-h-lg);
+  padding: 0 var(--control-px-lg);
+}
+
+/* ── 변형 ────────────────────────────────────────────────────────────────── */
+
+/* 브랜드 골드는 면으로만 쓴다. 라이트 테마에서 배경 대비 1.95:1 이라 선으로는 안 보인다. */
+.primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.primary:hover {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* 보조 면은 스스로 경계를 못 만든다(배경과 3:1 미달). --border-input 이 경계를 맡는다. */
+.secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--border-input);
+}
+
+.secondary:hover {
+  border-color: var(--border-hover);
+}
+
+.ghost {
+  background: none;
+  color: var(--text-secondary);
+  border-color: var(--border-input);
+}
+
+.ghost:hover {
+  color: var(--foreground);
+  border-color: var(--border-hover);
+}
+
+.accent {
+  background: none;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.accent:hover {
+  background: var(--surface-hover);
+}
+
+.positive {
+  background: none;
+  color: var(--positive);
+  border-color: var(--positive);
+}
+
+.positive:hover {
+  background: var(--surface-hover);
+}
+
+.negative {
+  background: none;
+  color: var(--negative);
+  border-color: var(--negative);
+}
+
+.negative:hover {
+  background: var(--surface-hover);
+}

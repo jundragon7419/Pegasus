@@ -1,0 +1,165 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--background);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-3) var(--content-pad);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--fs-title-sm);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.brand:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-inline-start: var(--space-4);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  height: var(--control-h-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+}
+
+.navLink:hover {
+  background: var(--surface-hover);
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.navLinkActive {
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-weight: var(--weight-semibold);
+}
+
+/* 오른쪽 영역을 끝으로 민다. */
+.spacer {
+  flex: 1;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ── 메뉴 트리거(햄버거 · 개발 메뉴) ─────────────────────────────────────── */
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--control-h-sm);
+  min-width: var(--control-h-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+.iconButton:hover {
+  border-color: var(--border-hover);
+  color: var(--foreground);
+}
+
+/* ── 드롭다운 ────────────────────────────────────────────────────────────── */
+
+.menu {
+  min-width: 13rem;
+  padding: var(--space-2);
+  background: var(--background);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-panel);
+  /* 배경 하나 방침이라 층은 그림자와 테두리로만 만든다. */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  z-index: 30;
+}
+
+.menuLabel {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  color: var(--text-meta);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-inner);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Radix 는 키보드·마우스 하이라이트를 data-highlighted 로 알려준다. */
+.menuItem[data-highlighted] {
+  background: var(--surface-hover);
+  color: var(--foreground);
+}
+
+.menuItem a {
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+}
+
+.menuSeparator {
+  height: 1px;
+  margin: var(--space-2) var(--space-1);
+  background: var(--border-faint);
+}
+
+/* ── 반응형 ──────────────────────────────────────────────────────────────── */
+
+.desktopOnly {
+  display: flex;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: inline-flex;
+  }
+}

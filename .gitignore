@@ -12,3 +12,19 @@ dist/
 .env
 .env.*
 !.env.example
+
+# 로그
+logs
+*.log
+npm-debug.log*
+
+# 빌드 부산물·로컬 파일
+dist-ssr/
+*.local
+
+# 에디터·OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
