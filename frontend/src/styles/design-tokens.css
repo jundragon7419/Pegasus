@@ -1,0 +1,118 @@
+/* =============================================================================
+   KWU Pegasus — 디자인 토큰
+
+   구성: 배경 1개 + Primary / Secondary / Accent + 강조색 2종(negative·positive).
+   카드·모달 등 층은 별도 배경색이 아니라 --surface-* 반투명 오버레이로 만든다.
+
+   설계 원칙
+   1. 강조색 2종은 명도(L)·채도(C)를 고정하고 색상(hue)만 회전한다.
+   2. --accent 는 브랜드 골드(--primary)와 hue·채도가 같은 어두운 버전이다.
+      (H 87° · C 0.055 공유, 명도만 다름)
+   3. 알파 파생 토큰은 알파가 아니라 "대비비"를 테마 간에 맞춘다.
+      라이트는 다크보다 약 1.3~1.4배 높은 알파가 필요하다.
+
+   브랜드 축: 골드 H 87° · 크림 H 90° · 네이비 H 253°
+
+   사용 제약 (검증에서 도출)
+   - --primary(골드)는 라이트에서 배경 대비 1.95:1 이라 '선'으로 쓸 수 없다.
+     면(fill)으로만 쓰고, 테두리·아이콘·링크에는 --accent 를 쓴다.
+   - 테두리 없는 보조 컨트롤은 배경과 3:1 을 만들 수 없다(위계가 뒤집힌다).
+     --secondary 를 면으로 쓰고 경계는 --border-input(3:1 검증됨)이 맡는다.
+
+   WCAG 2.1 검증 완료 — 본문 7:1(AAA), 그 외 4.5:1(AA), 테두리 3:1(1.4.11).
+   ============================================================================= */
+
+:root {
+  /* ── 파생 공식 (테마 무관). 값은 --overlay-rgb 와 --a-* 에서 나온다 ── */
+
+  /* 층 — background 대비 체감 명도차 1.5 / 2.1 / 3.1 / 4.2 / 5.5 %p */
+  --surface-faint:         rgba(var(--overlay-rgb), var(--a-surface-faint));
+  --surface-card:          rgba(var(--overlay-rgb), var(--a-surface-card));
+  --surface-hover:         rgba(var(--overlay-rgb), var(--a-surface-hover));
+  --surface-input:         rgba(var(--overlay-rgb), var(--a-surface-input));
+  --surface-elevated:      rgba(var(--overlay-rgb), var(--a-surface-elevated));
+
+  /* 테두리 — background 대비 1.15 / 1.4 / 1.7 / 2.2 / 3.0 / 3.65 / 4.5 : 1 */
+  --border-faint:          rgba(var(--overlay-rgb), var(--a-border-faint));
+  --border-dim:            rgba(var(--overlay-rgb), var(--a-border-dim));
+  --border-default:        rgba(var(--overlay-rgb), var(--a-border-default));
+  --border-medium:         rgba(var(--overlay-rgb), var(--a-border-medium));
+  --border-input:          rgba(var(--overlay-rgb), var(--a-border-input));
+  --border-strong:         rgba(var(--overlay-rgb), var(--a-border-strong));
+  --border-hover:          rgba(var(--overlay-rgb), var(--a-border-hover));
+
+  /* 텍스트 — background 대비 17 / 7 / 5 / 4.5 / 3 : 1 */
+  --foreground:            rgb(var(--overlay-rgb));
+  --text-secondary:        rgba(var(--overlay-rgb), var(--a-text-secondary));
+  --text-tertiary:         rgba(var(--overlay-rgb), var(--a-text-tertiary));
+  --text-muted:            rgba(var(--overlay-rgb), var(--a-text-muted));
+  --text-meta:             rgba(var(--overlay-rgb), var(--a-text-meta));
+}
+
+:root[data-theme="light"] {
+  --overlay-rgb:           1, 15, 36;   /* foreground 및 모든 파생 토큰의 원천 */
+  --background:            #f6f3eb;   /* oklch(96.4% 0.011 90) */
+
+  --primary:               #c0af89;   /* oklch(75.9% 0.055 87) — 브랜드 골드, CTA. 면으로만 */
+  --primary-foreground:    #010f24;
+  --secondary:             #e3ecf7;   /* oklch(94.0% 0.018 253) — 보조 면. 경계는 --border-input */
+  --secondary-foreground:  #010f24;
+  --accent:                #786945;   /* oklch(52.6% 0.055 88) — 링크·테두리·활성 상태 */
+  --accent-foreground:     #f6f3eb;   /* accent 를 면으로 쓸 때 */
+
+  /* 강조색 — L 51% · C 0.13 고정, hue만 회전 */
+  --negative:              #a3433b;   /* H 27° */
+  --positive:              #187a3b;   /* H 150° */
+
+  /* 알파 — 대비비를 맞추기 위해 테마별로 값이 다르다 */
+  --a-surface-faint:       0.02;
+  --a-surface-card:        0.03;
+  --a-surface-hover:       0.045;
+  --a-surface-input:       0.06;
+  --a-surface-elevated:    0.08;
+  --a-border-faint:        0.07;
+  --a-border-dim:          0.16;
+  --a-border-default:      0.24;
+  --a-border-medium:       0.34;
+  --a-border-input:        0.45;
+  --a-border-strong:       0.51;
+  --a-border-hover:        0.575;
+  --a-text-secondary:      0.7;
+  --a-text-tertiary:       0.61;
+  --a-text-muted:          0.58;
+  --a-text-meta:           0.45;
+}
+
+:root[data-theme="dark"] {
+  --overlay-rgb:           246, 243, 235;   /* foreground 및 모든 파생 토큰의 원천 */
+  --background:            #011126;   /* oklch(17.7% 0.050 253) */
+
+  --primary:               #c0af89;   /* oklch(75.9% 0.055 87) — 브랜드 골드, CTA. 면으로만 */
+  --primary-foreground:    #010f24;
+  --secondary:             #1f2f42;   /* oklch(30.0% 0.041 253) — 보조 면. 경계는 --border-input */
+  --secondary-foreground:  #f6f3eb;
+  --accent:                #d2c3a0;   /* oklch(82.1% 0.050 88) — 링크·테두리·활성 상태 */
+  --accent-foreground:     #010f24;   /* accent 를 면으로 쓸 때 */
+
+  /* 강조색 — L 76% · C 0.12 고정, hue만 회전 */
+  --negative:              #f49287;   /* H 27° */
+  --positive:              #76c788;   /* H 150° */
+
+  /* 알파 — 대비비를 맞추기 위해 테마별로 값이 다르다 */
+  --a-surface-faint:       0.015;
+  --a-surface-card:        0.02;
+  --a-surface-hover:       0.03;
+  --a-surface-input:       0.045;
+  --a-surface-elevated:    0.06;
+  --a-border-faint:        0.065;
+  --a-border-dim:          0.135;
+  --a-border-default:      0.195;
+  --a-border-medium:       0.265;
+  --a-border-input:        0.355;
+  --a-border-strong:       0.41;
+  --a-border-hover:        0.48;
+  --a-text-secondary:      0.63;
+  --a-text-tertiary:       0.51;
+  --a-text-muted:          0.48;
+  --a-text-meta:           0.36;
+}
