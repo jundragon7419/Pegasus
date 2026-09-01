@@ -163,3 +163,71 @@
     display: inline-flex;
   }
 }
+
+/* ── 사용자 영역 ─────────────────────────────────────────────────────────── */
+
+.user {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+/* 매니저 이상은 브랜드 골드로 구분한다 */
+.roleBadgeElevated {
+  border-color: var(--primary);
+  color: var(--accent);
+}
+
+.username {
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  max-width: 8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 드롭다운 항목의 보조 설명 */
+.menuMeta {
+  display: block;
+  margin-top: 1px;
+  color: var(--text-meta);
+  font-size: var(--fs-meta);
+}
+
+.menuItem {
+  height: auto;
+  min-height: var(--control-h);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+/* 320px 같은 아주 좁은 화면에서는 헤더 우측 묶음(개발 메뉴·테마 토글·햄버거)이
+   브랜드와 함께 들어가지 못해 가로 스크롤이 생겼다. 간격과 여백을 줄여 맞춘다. */
+@media (max-width: 360px) {
+  .inner {
+    gap: var(--space-2);
+    padding-inline: var(--space-3);
+  }
+
+  .right {
+    gap: var(--space-2);
+  }
+
+  .brand {
+    font-size: var(--fs-body);
+  }
+}

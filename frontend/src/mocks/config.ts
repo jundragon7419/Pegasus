@@ -10,10 +10,10 @@
  *   ?mockFail=records:404  상태 코드 지정
  *   ?mockEmpty=all         전부 비움
  *
- * 도메인 키: posts · roster · schedule · records
+ * 도메인 키: auth · posts · roster · schedule · records
  */
 
-export type MockDomain = 'posts' | 'roster' | 'schedule' | 'records'
+export type MockDomain = 'auth' | 'posts' | 'roster' | 'schedule' | 'records'
 
 function params(): URLSearchParams {
   if (typeof window === 'undefined') return new URLSearchParams()

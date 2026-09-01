@@ -1,0 +1,70 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.required {
+  margin-left: 2px;
+  color: var(--negative);
+}
+
+/* 입력과 옆 버튼(중복확인·인증 등)을 한 줄에 둔다 */
+.row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: var(--control-h);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-input);
+  /* 단일행 입력은 pill. 여러 줄 입력에는 --radius-field 를 쓴다 */
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-size: var(--fs-body);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--border-hover);
+}
+
+.input:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--negative);
+}
+
+.message {
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+}
+
+.error {
+  color: var(--negative);
+}
+
+.hint {
+  color: var(--text-muted);
+}
+
+.success {
+  color: var(--positive);
+}

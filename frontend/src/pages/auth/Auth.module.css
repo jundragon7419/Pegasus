@@ -1,0 +1,79 @@
+/* 로그인·회원가입이 공유하는 레이아웃. */
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: var(--space-7) var(--content-pad) var(--space-8);
+}
+
+.title {
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.submit {
+  width: 100%;
+}
+
+/* 폼 전체에 해당하는 오류(로그인 실패 등).
+   화면을 옮기지 않고 이 자리에 보여준다 — 입력을 잃지 않기 위해서다. */
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--negative);
+  border-radius: var(--radius-field);
+  color: var(--negative);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+.footer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-faint);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+/* 목 서버 안내. 개발 중에만 보인다 */
+.devNote {
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-field);
+  color: var(--text-muted);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+}
+
+.devNote code {
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+}
