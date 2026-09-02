@@ -1,0 +1,199 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+.title {
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+}
+
+.tabsRow {
+  margin-top: var(--space-5);
+}
+
+.panel {
+  margin-top: var(--space-5);
+}
+
+/* ── 행 ──────────────────────────────────────────────────────────────────── */
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* 저장 직후 잠깐 강조해 어느 행이 반영됐는지 알린다 */
+.rowSaved {
+  border-color: var(--positive);
+  background: var(--surface-hover);
+}
+
+.dateGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.tilde {
+  color: var(--text-muted);
+}
+
+.rowActions {
+  display: flex;
+  gap: var(--space-2);
+  justify-self: end;
+}
+
+/* ── 폼 컨트롤 ───────────────────────────────────────────────────────────── */
+
+.select,
+.input {
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-size: var(--fs-sm);
+  min-width: 0;
+}
+
+.select:hover,
+.input:hover {
+  border-color: var(--border-hover);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--negative);
+}
+
+.nameInput {
+  flex: 1;
+  min-width: 8rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* ── 하단 액션 ───────────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* ── 결과 안내 ───────────────────────────────────────────────────────────── */
+
+.result {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-field);
+}
+
+.resultOk {
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.resultConflict {
+  border-color: var(--negative);
+}
+
+.resultTitle {
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.conflictList {
+  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+  list-style: none;
+}
+
+.conflictList code {
+  font-family: var(--font-display);
+  color: var(--negative);
+}
+
+/* ── 수정 탭 ─────────────────────────────────────────────────────────────── */
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.chip {
+  height: var(--control-h-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.chip:hover {
+  border-color: var(--border-hover);
+  color: var(--foreground);
+}
+
+.chipActive,
+.chipActive:hover {
+  background: var(--primary);
+  border-color: transparent;
+  color: var(--primary-foreground);
+  font-weight: var(--weight-semibold);
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rowActions {
+    justify-self: stretch;
+  }
+
+  .rowActions > * {
+    flex: 1;
+  }
+}

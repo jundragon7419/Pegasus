@@ -1,5 +1,5 @@
 import { MOCK_USERS, type MockUser } from '@/mocks/fixtures/users'
-import type { AuthUser, User } from '@/types/auth'
+import type { AuthUser, StaffType, User } from '@/types/auth'
 
 export type { MockUser }
 
@@ -44,6 +44,62 @@ export const findByEmail = (email: string) =>
 
 export const findById = (id: number) => users.find((u) => u.id === id)
 
+/** 로스터 연동 키. 학번이 없는 계정은 매칭 대상이 아니다(§12-17). */
+export const findByStudentId = (studentId: string) =>
+  users.find((u) => u.studentId !== null && u.studentId === studentId)
+
+/* ── 관리자 상태 전이 (§5.10 · §7.1) ────────────────────────────────────────
+   **대상 조건을 여기서 확인하지 않는다.** 판정은 `lib/roles.ts` 와 핸들러가 하고
+   이 함수들은 적용만 한다 — 규칙이 두 곳에 흩어지면 조용히 어긋난다. */
+
+export function approveMember(user: MockUser): void {
+  user.membershipStatus = 'approved'
+  user.authority = 'member'
+}
+
+export function rejectMember(user: MockUser): void {
+  user.membershipStatus = 'rejected'
+}
+
+/** 강등: 멤버십도 함께 푼다. 권한만 내리면 "승인됐는데 basic" 인 상태가 남는다. */
+export function demoteMember(user: MockUser): void {
+  user.authority = 'basic'
+  user.membershipStatus = 'none'
+}
+
+export function setManager(user: MockUser): void {
+  user.authority = 'manager'
+}
+
+export function unsetManager(user: MockUser): void {
+  user.authority = 'member'
+}
+
+export function setStaff(user: MockUser, staffType: StaffType): void {
+  user.authority = 'staff'
+  user.staffType = staffType
+}
+
+export function unsetStaff(user: MockUser): void {
+  user.authority = 'member'
+  user.staffType = null
+}
+
+/**
+ * 차단. **`isBanned` 만 건드린다.**
+ *
+ * 구 스키마는 `membership_status` 하나가 신청 상태와 차단을 겸해서 차단하는 순간
+ * 이전 상태가 소실됐고, 해제할 때 `authority` 로 추측해야 했다(§12-19).
+ * 상태를 분리했으므로 차단·해제가 신청 상태를 건드리지 않는다.
+ */
+export function banUser(user: MockUser): void {
+  user.isBanned = true
+}
+
+export function unbanUser(user: MockUser): void {
+  user.isBanned = false
+}
+
 export function createUser(input: {
   username: string
   email: string
@@ -69,6 +125,34 @@ export function createUser(input: {
   }
   users.push(user)
   return user
+}
+
+/**
+ * 계정 탈퇴. **레코드만 지운다.**
+ *
+ * 글·댓글·로그의 익명화는 각 저장소가 맡는다(`boardState.anonymizeAuthor` ·
+ * `logState.anonymizeLogsOf`). 구 구현은 글을 통째로 DELETE 해서 **그 글에 달린
+ * 타인의 댓글과 투표까지 CASCADE 로 지웠고**, 감사 로그도 함께 소멸시켰다(§12-12).
+ *
+ * 세션도 함께 끊는다 — 남겨 두면 토큰이 살아 있는 동안 유령 계정으로 요청이 통한다.
+ */
+export function removeUser(id: number): boolean {
+  const index = users.findIndex((u) => u.id === id)
+  if (index === -1) return false
+  users.splice(index, 1)
+
+  for (const [token, userId] of [...sessions]) {
+    if (userId === id) sessions.delete(token)
+  }
+  return true
+}
+
+/**
+ * 비밀번호 변경. 목은 평문을 그대로 들고 있다 —
+ * **실제 백엔드는 반드시 해싱해야 한다.** 목이 증명하지 못하는 것 중 하나다.
+ */
+export function changePassword(user: MockUser, next: string): void {
+  user.password = next
 }
 
 /** 비밀번호는 절대 응답에 실리면 안 된다. 응답을 만들 때 반드시 이 함수를 거친다. */

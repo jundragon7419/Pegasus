@@ -7,21 +7,14 @@ import { Skeleton } from '@/components/states/Skeleton'
 import { useApiResource } from '@/hooks/useApiResource'
 import { useScheduleData } from '@/hooks/useScheduleData'
 import { cx } from '@/lib/cx'
+import { POST_TYPE_LABEL } from '@/lib/labels'
 import { ROUTES } from '@/lib/routes'
-import type { PostSummary, PostType } from '@/types/board'
+import type { RecentPost } from '@/types/board'
 
 import styles from './Home.module.css'
 
 /** 홈 위젯이 채우는 줄 수. 고정글이 많으면 최신글이 그만큼 줄어든다. */
 const WIDGET_SIZE = 8
-
-const POST_TYPE_LABEL: Record<PostType, string> = {
-  notice: '공지',
-  event: '행사',
-  game: '경기',
-  family_occasion: '경조사',
-  normal: '일반',
-}
 
 const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -32,14 +25,31 @@ export default function Home() {
   return (
     <main className={styles.page}>
       <div className={styles.hero}>
-        {/* 이미지에 문구가 들어 있어 alt 로 같은 내용을 전한다 */}
-        <img
-          className={styles.heroImage}
-          src="/hero.jpg"
-          alt="THINK WIN, PLAY WIN — 광운대학교 아마야구부 페가수스"
-          // 첫 화면에 바로 보이므로 지연 로딩하지 않는다
-          fetchPriority="high"
-        />
+        {/*
+          첫 화면에 바로 보이는 이미지라 초기 로딩을 그대로 붙든다.
+          원본 JPEG 는 207KB — 모바일에서 그만큼을 다 받을 이유가 없다.
+
+          `<picture>` 로 WebP 를 우선 주되 `<img src>` 의 JPEG 를 그대로 남긴다.
+          WebP 를 못 읽는 브라우저는 fallback 을 받고, 나머지는 뷰포트에 맞는
+          변형만 받는다(모바일 19.6KB · 데스크톱 100.9KB).
+        */}
+        <picture>
+          <source
+            type="image/webp"
+            srcSet="/hero-640.webp 640w, /hero-1000.webp 1000w, /hero-1317.webp 1317w"
+            sizes="100vw"
+          />
+          {/* 이미지에 문구가 들어 있어 alt 로 같은 내용을 전한다 */}
+          <img
+            className={styles.heroImage}
+            src="/hero.jpg"
+            alt="THINK WIN, PLAY WIN — 광운대학교 아마야구부 페가수스"
+            width={1317}
+            height={550}
+            // 첫 화면에 바로 보이므로 지연 로딩하지 않는다
+            fetchPriority="high"
+          />
+        </picture>
       </div>
 
       <div className={styles.content}>
@@ -53,15 +63,18 @@ export default function Home() {
 /* ── 게시판 위젯 ────────────────────────────────────────────────────────── */
 
 function BoardWidget() {
-  const posts = useApiResource<PostSummary[]>('/api/posts')
+  /**
+   * 비로그인에게도 보이는 화면이므로 **공개 축약 엔드포인트**를 쓴다(§12-1).
+   * 목록(`/api/posts`)은 basic+ 전용이고 작성자·조회수까지 담는다.
+   * 정렬과 개수 제한은 서버가 이미 했으므로 여기서는 고정글 경계만 찾는다.
+   */
+  const posts = useApiResource<RecentPost[]>(`/api/posts/recent?limit=${WIDGET_SIZE}`)
 
   const { pinned, recent } = useMemo(() => {
     const all = posts.data ?? []
-    const pinnedPosts = all.filter((post) => post.isPinned)
-    const rest = all.filter((post) => !post.isPinned)
     return {
-      pinned: pinnedPosts,
-      recent: rest.slice(0, Math.max(0, WIDGET_SIZE - pinnedPosts.length)),
+      pinned: all.filter((post) => post.isPinned),
+      recent: all.filter((post) => !post.isPinned),
     }
   }, [posts.data])
 

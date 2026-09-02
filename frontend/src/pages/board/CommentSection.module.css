@@ -1,0 +1,125 @@
+.root {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-default);
+}
+
+.heading {
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.empty {
+  padding: var(--space-6) 0;
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  list-style: none;
+}
+
+/* ── 한 줄 ──────────────────────────────────────────────────────────────── */
+
+.comment {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+}
+
+.commentHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.commentAuthor {
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+}
+
+.commentDate {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.edited {
+  color: var(--text-muted);
+}
+
+.commentBody {
+  margin-top: var(--space-2);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.commentActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+/* ── 입력 ───────────────────────────────────────────────────────────────── */
+
+.form {
+  margin-top: var(--space-5);
+}
+
+.textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-field);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  resize: vertical;
+}
+
+.textarea:hover {
+  border-color: var(--border-hover);
+}
+
+.formFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.counter {
+  margin-right: auto;
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.error {
+  margin-top: var(--space-2);
+  color: var(--negative);
+  font-size: var(--fs-sm);
+}

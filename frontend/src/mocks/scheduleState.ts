@@ -43,6 +43,25 @@ export function updateEvent(
   return event
 }
 
+/**
+ * 공휴일 재동기화(§5.10 · §12-6).
+ *
+ * 구 구현은 **조회 시점에 자동으로** 공공 API 를 호출하고 DELETE/INSERT 를
+ * 실행했다. 인증 없는 `?year=1900` 요청을 반복하면 외부 쿼터를 소진시킬 수
+ * 있었다. 이제 staff+ 가 명시적으로 눌러야만 돈다.
+ *
+ * **목은 외부 API 를 대신하지 못한다.** 픽스처를 다시 심어 "동기화가 돌았고 몇 건이
+ * 들어왔다"는 흐름만 재현한다. 실제 호출·실패·쿼터는 백엔드에서 확인해야 한다.
+ */
+export function resyncHolidays(year: number): number {
+  for (let i = holidays.length - 1; i >= 0; i--) {
+    if (holidays[i].date.startsWith(String(year))) holidays.splice(i, 1)
+  }
+  const fresh = makeHolidays(year)
+  holidays.push(...fresh)
+  return fresh.length
+}
+
 export function deleteEvent(id: number): boolean {
   const index = events.findIndex((e) => e.id === id)
   if (index === -1) return false

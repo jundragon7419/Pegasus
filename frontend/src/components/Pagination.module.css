@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-6);
+}
+
+.page,
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--control-h-sm);
+  height: var(--control-h-sm);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.page:hover:not(.current),
+.arrow:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--foreground);
+}
+
+.arrow:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.current {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: var(--weight-semibold);
+}

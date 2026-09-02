@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.paragraph {
+  /* 문단 안의 줄바꿈은 살리되, 연속 공백까지 보존하지는 않는다 */
+  white-space: pre-line;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--foreground);
+  /* 한국어는 어절 단위로 끊고, 끊을 수 없는 긴 문자열만 강제로 자른다 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}

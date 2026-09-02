@@ -1,0 +1,117 @@
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ── 데스크톱: 표 ───────────────────────────────────────────────────────── */
+
+.tableWrap {
+  /* 열이 많아 좁아지면 가로 스크롤. 카드 전환은 768px 아래에서 일어난다 */
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.table th {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-default);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border-dim);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: var(--surface-hover);
+}
+
+.end {
+  text-align: right;
+}
+
+.actionCell {
+  white-space: nowrap;
+}
+
+.actionCell > * + * {
+  margin-left: var(--space-2);
+}
+
+.cards {
+  display: none;
+}
+
+/* ── 모바일: 카드 ───────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .tableWrap {
+    display: none;
+  }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius-field);
+  }
+
+  .cardFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cardField {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+
+  .cardLabel {
+    color: var(--text-tertiary);
+    font-size: var(--fs-meta);
+  }
+
+  .cardValue {
+    min-width: 0;
+    font-size: var(--fs-sm);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  .cardActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-dim);
+  }
+
+  /* 카드에서는 버튼이 가로를 채워 누르기 쉽게 한다 */
+  .cardActions > * {
+    flex: 1;
+    min-width: 6rem;
+  }
+}

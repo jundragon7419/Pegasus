@@ -1,0 +1,128 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+.title {
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+}
+
+.tabs {
+  margin-top: var(--space-5);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.note {
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.error {
+  color: var(--negative);
+  font-size: var(--fs-sm);
+}
+
+.success {
+  color: var(--positive);
+  font-size: var(--fs-sm);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ── 연도 선택 · 입력 ───────────────────────────────────────────────────── */
+
+.yearRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.addRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.input,
+.yearInput {
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: var(--fs-sm);
+  min-width: 0;
+}
+
+.input {
+  flex: 1 1 8rem;
+}
+
+.yearInput {
+  width: 7rem;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.input:hover,
+.yearInput:hover {
+  border-color: var(--border-hover);
+}
+
+/* 표 안의 작은 선택 상자(스태프 구분) */
+.inlineSelect {
+  height: var(--control-h-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: var(--fs-meta);
+}
+
+@media (max-width: 768px) {
+  .addRow > * {
+    flex: 1 1 100%;
+  }
+}

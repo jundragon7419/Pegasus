@@ -12,6 +12,14 @@
 
 import type { RosterEntry } from '@/types/roster'
 
+/*
+ * 2026 명단에 **동명이인이 한 쌍 있다**(임승우 · 46번과 53번). 실수가 아니다.
+ *
+ * 기록 화면은 외부 리그 API 가 이름만 주기 때문에 로스터를 이름으로 뒤져
+ * 등번호를 붙인다(§9.2). 구 구현은 이름이 겹치면 먼저 찾은 사람의 번호를 그냥
+ * 찍어서 화면에 남의 등번호가 나왔다(§12-17). 지금은 겹치면 붙이지 않는데,
+ * **명단에 동명이인이 없으면 그 경로가 한 번도 실행되지 않는다.**
+ */
 export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
   "2025": [
     {
@@ -38,10 +46,10 @@ export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
       "id": 2025002,
       "year": 2025,
       "number": "20",
-      "name": "강성민",
-      "studentId": "2025900043",
+      "name": "김민준",
+      "studentId": "2024900002",
       "generation": 43,
-      "userId": null,
+      "userId": 3,
       "role": "roster_player"
     },
     {
@@ -340,30 +348,30 @@ export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
       "id": 2026000,
       "year": 2026,
       "number": "0",
-      "name": "김은우",
-      "studentId": "2023900001",
+      "name": "최우진",
+      "studentId": "2008900005",
       "generation": 22,
-      "userId": null,
+      "userId": 6,
       "role": "roster_headcoach"
     },
     {
       "id": 2026001,
       "year": 2026,
       "number": "1",
-      "name": "류건우",
-      "studentId": "2026900002",
+      "name": "박도윤",
+      "studentId": "2022900004",
       "generation": 42,
-      "userId": null,
+      "userId": 5,
       "role": "roster_president"
     },
     {
       "id": 2026002,
       "year": 2026,
       "number": "16",
-      "name": "장태민",
-      "studentId": "2022900003",
+      "name": "김민준",
+      "studentId": "2024900002",
       "generation": 41,
-      "userId": null,
+      "userId": 3,
       "role": "roster_player"
     },
     {
@@ -371,7 +379,7 @@ export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
       "year": 2026,
       "number": "46",
       "name": "임승우",
-      "studentId": "2022900004",
+      "studentId": "2022900006",
       "generation": 39,
       "userId": null,
       "role": "roster_player"
@@ -580,7 +588,7 @@ export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
       "id": 2026024,
       "year": 2026,
       "number": "53",
-      "name": "최가온",
+      "name": "임승우",
       "studentId": "2024900025",
       "generation": 40,
       "userId": null,
@@ -680,10 +688,10 @@ export const ROSTER_BY_YEAR: Record<number, RosterEntry[]> = {
       "id": 2026034,
       "year": 2026,
       "number": "M",
-      "name": "최선우",
-      "studentId": "2023900035",
+      "name": "이서준",
+      "studentId": "2023900003",
       "generation": 43,
-      "userId": null,
+      "userId": 4,
       "role": "roster_manager"
     },
     {

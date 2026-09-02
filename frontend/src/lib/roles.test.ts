@@ -14,7 +14,6 @@ import {
   canAppointManager,
   canAppointStaff,
   canBanUser,
-  canDeletePoll,
   canEditComment,
   canEditRoster,
   canModifyResource,
@@ -22,6 +21,7 @@ import {
   canSetActiveYear,
   canUsePostType,
   canViewLogsOf,
+  canViewLogsOfUser,
   canWithdraw,
   hasAtLeast,
   resolvePinUntil,
@@ -130,12 +130,6 @@ describe('소유권 기반 판정', () => {
     expect(canEditComment(owner, 1)).toBe(true)
     expect(canEditComment(manager, 1)).toBe(false)
   })
-
-  it('투표 삭제 — 글 작성자만. 매니저도 불가', () => {
-    expect(canDeletePoll(owner, 1)).toBe(true)
-    expect(canDeletePoll(manager, 1)).toBe(false)
-    expect(canDeletePoll(owner, null)).toBe(false)
-  })
 })
 
 describe('활동 로그 열람 (§8.4) — 열람자 권한이 대상보다 높아야 한다', () => {
@@ -179,5 +173,33 @@ describe('resolvePinUntil (§5.2) — 조건을 못 갖추면 무조건 null', (
 
   it('고정 불가 유형(normal)은 매니저가 보내도 무시된다', () => {
     expect(resolvePinUntil('normal', 'infinite', 'manager')).toBeNull()
+  })
+})
+
+describe('canViewLogsOfUser — 본인 예외 (§8.4)', () => {
+  const u = (id: number, authority: Role) => ({ id, authority })
+
+  it('본인은 권한과 무관하게 자기 로그를 본다', () => {
+    // 순수 역할 비교에는 등호가 없어 아무도 자기 로그를 못 봤다
+    for (const role of ['basic', 'member', 'manager', 'staff', 'root'] as const) {
+      expect(canViewLogsOfUser(u(1, role), u(1, role)), role).toBe(true)
+    }
+  })
+
+  it('타인은 권한이 더 높을 때만 본다', () => {
+    expect(canViewLogsOfUser(u(1, 'manager'), u(2, 'member'))).toBe(true)
+    expect(canViewLogsOfUser(u(1, 'manager'), u(2, 'manager'))).toBe(false)
+    expect(canViewLogsOfUser(u(1, 'manager'), u(2, 'staff'))).toBe(false)
+    expect(canViewLogsOfUser(u(1, 'root'), u(2, 'staff'))).toBe(true)
+    expect(canViewLogsOfUser(u(1, 'root'), u(2, 'root'))).toBe(false)
+  })
+
+  it('비로그인은 아무것도 못 본다', () => {
+    expect(canViewLogsOfUser(null, u(1, 'basic'))).toBe(false)
+  })
+
+  it('id 가 같아도 역할이 다르면 여전히 본인이다 — 판정 기준은 id 다', () => {
+    // 권한이 바뀐 직후처럼 두 값이 잠깐 어긋날 수 있다. id 가 기준이어야 한다
+    expect(canViewLogsOfUser(u(7, 'basic'), u(7, 'root'))).toBe(true)
   })
 })

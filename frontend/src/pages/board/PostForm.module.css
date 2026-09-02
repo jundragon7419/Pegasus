@@ -1,0 +1,174 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: min(var(--content-max), 48rem);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+.title {
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.notice {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  background: var(--surface-faint);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+/* ── 필드 ───────────────────────────────────────────────────────────────── */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+}
+
+.select,
+.input,
+.date {
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  min-width: 0;
+}
+
+.select {
+  align-self: flex-start;
+  min-width: 10rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-field);
+  background: var(--surface-input);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  resize: vertical;
+}
+
+.select:hover,
+.input:hover,
+.date:hover,
+.textarea:hover {
+  border-color: var(--border-hover);
+}
+
+.hint {
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-body);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ── 묶음 ───────────────────────────────────────────────────────────────── */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+}
+
+.groupTitle {
+  padding: 0 var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.pinRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-left: var(--space-6);
+}
+
+/* ── 투표 ───────────────────────────────────────────────────────────────── */
+
+.poll {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-left: var(--space-6);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.optionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.optionRow .input {
+  flex: 1;
+}
+
+.pollOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ── 하단 ───────────────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.error {
+  color: var(--negative);
+  font-size: var(--fs-sm);
+}
+
+@media (max-width: 480px) {
+  .pinRow,
+  .poll {
+    padding-left: 0;
+  }
+}

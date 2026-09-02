@@ -1,0 +1,306 @@
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--content-pad) var(--space-8);
+}
+
+.title {
+  font-size: var(--fs-page);
+  font-weight: var(--weight-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ── 상단 조작줄 ─────────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.monthNav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-h-sm);
+  height: var(--control-h-sm);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+}
+
+.navButton:hover {
+  border-color: var(--border-hover);
+  color: var(--foreground);
+}
+
+.monthLabel {
+  min-width: 7.5rem;
+  padding: 0 var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums lining-nums;
+  text-align: center;
+  color: var(--foreground);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* 연·월 피커 */
+.pickerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.pickerYear {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.pickerCell {
+  height: var(--control-h-sm);
+  padding: 0 var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.pickerCell:hover {
+  background: var(--surface-hover);
+  color: var(--foreground);
+}
+
+.pickerCellActive,
+.pickerCellActive:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: var(--weight-semibold);
+}
+
+/* ── 격자 ────────────────────────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: var(--space-5);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  overflow: clip;
+  background: var(--border-faint);
+}
+
+.dayLabel {
+  padding: var(--space-2) 0;
+  background: var(--surface-card);
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 6.5rem;
+  padding: var(--space-2);
+  background: var(--background);
+  text-align: left;
+}
+
+.cellOutside {
+  background: var(--surface-faint);
+}
+
+.dateNumber {
+  font-size: var(--fs-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* 일요일과 공휴일 */
+.dateRed {
+  color: var(--negative);
+}
+
+.dateToday {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: var(--weight-bold);
+}
+
+.holidayName {
+  color: var(--negative);
+  font-size: var(--fs-meta);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 일정 칩 ─────────────────────────────────────────────────────────────
+   일정 유형은 **색만으로 구분하지 않는다.** 모든 칩에 유형 라벨이 붙는다.
+   색각 이상 사용자에게도 안전하고, 팔레트를 늘리지 않아도 된다. */
+
+.chip {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 1px 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-tight);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+  text-align: left;
+  width: 100%;
+}
+
+.chipType {
+  flex: none;
+  font-weight: var(--weight-bold);
+}
+
+.chipName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chipTraining {
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.chipMeeting {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chipEvents {
+  background: var(--secondary);
+  border-color: var(--border-input);
+  color: var(--secondary-foreground);
+}
+
+.chipEtc {
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+}
+
+/* ── 모바일: 격자에는 점만, 목록은 아래에 ─────────────────────────────────
+   7열 격자에 칩 글자를 넣으면 375px 에서 읽을 수 없다. */
+
+.dots {
+  display: none;
+  gap: 2px;
+  height: 5px;
+  margin-top: 2px;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+}
+
+.dotTraining { background: var(--positive); }
+.dotMeeting  { background: var(--accent); }
+.dotEvents   { background: var(--foreground); }
+.dotEtc      { background: var(--text-muted); }
+.dotHoliday  { background: var(--negative); }
+
+.monthList {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.listHeading {
+  font-size: var(--fs-title-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.listItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  scroll-margin-top: 5rem;
+}
+
+.listDate {
+  flex: none;
+  min-width: 3.5rem;
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.listBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.listName {
+  font-size: var(--fs-sm);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .cell {
+    min-height: 3.75rem;
+    padding: var(--space-1);
+    align-items: center;
+  }
+
+  .chip,
+  .holidayName {
+    display: none;
+  }
+
+  .dots {
+    display: flex;
+  }
+
+  .monthList {
+    display: flex;
+  }
+
+  .monthLabel {
+    min-width: 6rem;
+    font-size: var(--fs-body);
+  }
+}

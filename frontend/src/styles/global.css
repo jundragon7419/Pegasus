@@ -28,6 +28,101 @@ html[data-theme='dark'] {
   color-scheme: dark;
 }
 
+/* ── 스크롤바 ────────────────────────────────────────────────────────────────
+   스크롤바가 나타났다 사라지면 그만큼 콘텐츠 폭이 흔들린다. 가운데 정렬된
+   레이아웃이 페이지를 옮길 때마다 좌우로 튀어 보이는 원인이 이것이다.
+   트랙을 항상 띄워 폭을 고정한다.
+
+   `scrollbar-gutter: stable` 은 자리만 비우고 스크롤바를 그리지 않는다.
+   여기서는 스크롤바 자체가 보여야 하므로 `overflow-y: scroll` 을 쓴다.
+   내용이 짧아 스크롤할 수 없을 때는 썸이 트랙을 위아래로 꽉 채운다.
+
+   **터치 기기는 제외한다.** 그쪽 스크롤바는 오버레이라 폭을 차지하지 않아
+   애초에 이 문제가 없고, 10px 을 강제하면 320px 화면에서 그만큼을 영구히 잃는다.
+
+   색은 design-tokens.css 의 오버레이 알파 토큰을 그대로 쓴다 —
+   `--overlay-rgb` 에서 파생되므로 테마를 따라 저절로 뒤집힌다. */
+
+:root {
+  --scrollbar-size: 10px;
+  /* 썸 둘레의 투명 여백. 트랙에 딱 붙지 않게 해 얇아 보이게 한다 */
+  --scrollbar-pad: 2px;
+  --scrollbar-track: var(--surface-faint);
+  --scrollbar-thumb: var(--border-medium);
+  --scrollbar-thumb-hover: var(--border-hover);
+}
+
+@media (pointer: fine) {
+  html {
+    overflow-y: scroll;
+  }
+
+  /* 표준 속성 경로 — Firefox 처럼 `::-webkit-scrollbar` 를 모르는 브라우저용.
+     두께를 px 로 정할 수 없고(thin/auto 뿐) 모서리도 둥글게 못 하지만,
+     "폭이 항상 일정하다"는 목적은 동일하게 달성된다.
+     상속되는 속성이라 html 에만 걸면 내부 컨테이너까지 따라온다.
+
+     **두 경로는 반드시 배타적이어야 한다.** Chrome 121+ 는 이 속성들도
+     지원하는데, 지정하는 순간 `::-webkit-scrollbar` 를 통째로 무시한다.
+     둘을 같이 쓰면 아래 블록이 전부 죽는다. */
+  @supports not selector(::-webkit-scrollbar) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    }
+  }
+
+  /* WebKit · Blink — 비표준이지만 두께·모서리·여백·화살표 제거까지 제어할 수
+     있다. 주체를 생략하면 모든 스크롤 컨테이너에 적용된다(모달 본문, 기록 표). */
+  ::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-pill);
+    /* 투명 테두리 + padding-box 로 썸을 안쪽으로 물린다.
+       margin 을 줄 수 없는 의사 요소에서 쓰는 방법이다. */
+    border: var(--scrollbar-pad) solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+    background-clip: padding-box;
+  }
+
+  /* 위아래 끝의 기본 화살표 버튼. 커스텀 스크롤바와 어울리지 않고
+     트랙 길이만 잡아먹는다. */
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* 가로·세로 스크롤바가 만나는 모서리(기록 표) */
+  ::-webkit-scrollbar-corner {
+    background: var(--scrollbar-track);
+  }
+
+  /* 스크롤할 수 없을 때 Chrome 은 **썸을 아예 그리지 않는다.** 트랙만 빈 채로
+     남아 스크롤바가 고장 난 것처럼 보인다.
+     그때 스크롤바는 `:disabled` 상태가 되므로, 트랙 자체를 썸처럼 칠해
+     위아래를 꽉 채운다.
+
+     (`html[data-scrollable]::-webkit-scrollbar-track` 처럼 주체에 조건을 붙이면
+     뷰포트 스크롤바에는 적용되지 않는다 — 브라우저에서 확인했다.) */
+  ::-webkit-scrollbar-track:disabled {
+    background: var(--scrollbar-thumb);
+    border-radius: var(--radius-pill);
+    border: var(--scrollbar-pad) solid transparent;
+    background-clip: padding-box;
+  }
+}
+
 /* ── 문서 ────────────────────────────────────────────────────────────────── */
 
 body {

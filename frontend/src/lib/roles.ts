@@ -58,6 +58,25 @@ export function canViewLogsOf(viewer: Role | null | undefined, target: Role): bo
   return ROLE_ORDER[viewer] > ROLE_ORDER[target]
 }
 
+/**
+ * 특정 사용자의 로그를 볼 수 있는가. **본인은 언제나 볼 수 있다.**
+ *
+ * 순수 역할 비교(`canViewLogsOf`)에는 등호가 없어 자기 로그를 아무도 못 본다 —
+ * §8.4 가 의도만 적고 놓친 부분이다. 감사 로그가 사용자에게도 의미를 가지려면
+ * "내 계정에서 무슨 일이 있었나"를 확인할 창구가 있어야 한다.
+ *
+ * 역할 비교는 그대로 두고 본인 예외만 얹는다 — 두 규칙을 한 함수에 섞으면
+ * "manager 가 manager 를 본다" 같은 실수가 끼어들기 쉽다.
+ */
+export function canViewLogsOfUser(
+  viewer: { id: number; authority: Role } | null | undefined,
+  target: { id: number; authority: Role },
+): boolean {
+  if (!viewer) return false
+  if (viewer.id === target.id) return true
+  return canViewLogsOf(viewer.authority, target.authority)
+}
+
 /** 이 유형의 글을 쓸 수 있는가. notice/event/game 은 manager+ 전용이다. */
 export function canUsePostType(role: Role | null | undefined, type: PostType): boolean {
   const managerOnly = (MANAGER_POST_TYPES as readonly string[]).includes(type)
@@ -90,18 +109,23 @@ export function resolvePinUntil(
 /** 댓글 수정은 소유자만 가능하다. 매니저도 타인 댓글은 수정할 수 없다. */
 export function canEditComment(
   user: { id: number } | null | undefined,
-  ownerId: number,
+  ownerId: number | null,
 ): boolean {
-  return !!user && user.id === ownerId
+  // 탈퇴한 사람의 댓글(ownerId === null)은 아무도 수정할 수 없다
+  return !!user && ownerId !== null && user.id === ownerId
 }
 
-/** 투표 삭제는 글 작성자만 가능하다(§5.4). 매니저도 안 된다. */
-export function canDeletePoll(
-  user: { id: number } | null | undefined,
-  postOwnerId: number | null,
-): boolean {
-  return !!user && user.id === postOwnerId
-}
+/*
+ * 투표 삭제 판정 함수는 두지 않는다.
+ *
+ * §5.4 의 "투표 삭제는 글 작성자만, 매니저도 안 된다"는 규칙은 그대로 살아 있다.
+ * 다만 **§12-8 을 고치면서 투표 삭제 엔드포인트 자체를 없앴다** — 투표는
+ * `PUT /api/posts/:id` 에 `poll: null` 을 보내 지우고, 그 PUT 은 소유자만
+ * 통과한다(§12-7). 규칙이 게시글 소유권 검사로 흡수된 것이다.
+ *
+ * 별도 함수를 남겨 두면 "어딘가에 투표 삭제 엔드포인트가 있다"고 읽히는데,
+ * 그건 우리가 의도적으로 없앤 것이다.
+ */
 
 /** 멤버 신청 승인·거부, 로스터 편집, 일정 편집. */
 export const canApproveMember = isManagerRole

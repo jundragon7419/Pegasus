@@ -22,7 +22,9 @@ export async function applyMockSwitches(
   if (status !== null) {
     return {
       response: HttpResponse.json(
-        { message: `목 서버가 의도적으로 ${status} 를 반환했습니다. (?mockFail)` },
+        // 숫자 뒤에는 조사를 붙이지 않는다 — `withParticle` 은 받침을 한글로만 판단하므로
+        // "500를" 가 된다. 숫자 읽는 법 표를 만드는 대신 조사가 없는 문장을 쓴다
+        { message: `목 서버가 의도적으로 ${status} 상태로 응답했습니다. (?mockFail)` },
         { status },
       ),
     }

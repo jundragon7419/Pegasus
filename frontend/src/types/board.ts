@@ -32,6 +32,20 @@ export type PostSummary = {
   views: number
 }
 
+/**
+ * 홈 위젯용 축약 응답. **비로그인에게도 내려가므로 제목·날짜·유형만 담는다.**
+ * 작성자·조회수까지 공개할 이유가 없다(§12-1).
+ */
+export type RecentPost = Pick<PostSummary, 'id' | 'type' | 'title' | 'date' | 'isPinned'>
+
+/** 목록 응답. 서버가 잘라서 내려준다(§12-14). */
+export type PagedPosts = {
+  items: PostSummary[]
+  page: number
+  size: number
+  total: number
+}
+
 /** 상세 조회 응답. 본문이 포함된다. */
 export type Post = PostSummary & {
   /**
@@ -50,7 +64,8 @@ export type AdjacentPosts = {
 export type Comment = {
   id: number
   postId: number
-  userId: number
+  /** 작성자가 탈퇴하면 null 이 된다(§12-12 익명화). 댓글 자체는 보존한다 */
+  userId: number | null
   author: string
   content: string
   isEdited: boolean
@@ -87,7 +102,12 @@ export type PollResponse = {
   poll: Poll
   options: PollOption[]
   totalVotes: number | null
-  /** 내가 선택한 옵션 id 목록 */
+  /**
+   * 내가 선택한 옵션 id 목록. **익명 투표에서는 참여했어도 빈 배열이다** —
+   * 서버가 누가 무엇을 골랐는지 저장하지 않기 때문이다(§12-9).
+   */
   userVotes: number[]
+  /** 참여 여부. 익명 투표에서 "이미 던졌다"를 알 수 있는 유일한 신호다 */
+  hasVoted: boolean
   canSeeResults: boolean
 }

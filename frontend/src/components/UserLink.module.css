@@ -1,0 +1,11 @@
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--border-medium);
+  text-underline-offset: 0.2em;
+}
+
+.link:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}

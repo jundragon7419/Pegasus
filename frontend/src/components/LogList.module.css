@@ -1,0 +1,230 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.row {
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-field);
+  /* 펼친 상세가 모서리를 넘지 않게 자른다 */
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  text-align: left;
+}
+
+.head:not(:disabled):hover {
+  background: var(--surface-hover);
+}
+
+.head:disabled {
+  cursor: default;
+}
+
+/* ── 액션 배지 ──────────────────────────────────────────────────────────── */
+
+.action {
+  justify-self: start;
+  padding: 0.1rem var(--space-2);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: var(--fs-meta);
+  white-space: nowrap;
+}
+
+/* 갈래마다 테두리만 달리한다 — 색만으로 구분하지 않도록 라벨은 항상 함께 있다 */
+.post {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.comment {
+  border-color: var(--border-medium);
+}
+
+.event {
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.user {
+  border-color: var(--negative);
+  color: var(--negative);
+}
+
+.roster,
+.setting,
+.poll {
+  border-color: var(--border-medium);
+}
+
+.summary {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time {
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.chevron {
+  color: var(--text-tertiary);
+  transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── 상세 ───────────────────────────────────────────────────────────────── */
+
+.detail {
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--border-dim);
+  background: var(--surface-faint);
+}
+
+.detailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: var(--space-3);
+  color: var(--accent);
+  font-size: var(--fs-meta);
+}
+
+.empty {
+  color: var(--text-tertiary);
+  font-size: var(--fs-sm);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.fieldLabel {
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+}
+
+.fieldValue {
+  font-size: var(--fs-sm);
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ── 변경 전 · 후 ───────────────────────────────────────────────────────── */
+
+.diff {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.diffHead,
+.diffRow {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+}
+
+.diffHead {
+  color: var(--text-tertiary);
+  font-size: var(--fs-meta);
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.diffBefore,
+.diffAfter {
+  font-size: var(--fs-sm);
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.diffBefore {
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  text-decoration-color: var(--border-medium);
+}
+
+/* 실제로 바뀐 줄만 표시한다 — 취소선만으로는 무엇이 달라졌는지 훑기 어렵다 */
+.diffChanged .diffAfter {
+  color: var(--positive);
+  font-weight: var(--weight-medium);
+}
+
+.diffRow:not(.diffChanged) .diffBefore {
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: var(--space-1);
+  }
+
+  .action {
+    grid-column: 1;
+  }
+
+  .time {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .summary {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+
+  .chevron {
+    display: none;
+  }
+
+  .diffHead,
+  .diffRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .diffHead {
+    display: none;
+  }
+
+  .diffBefore::before {
+    content: '변경 전 · ';
+    color: var(--text-tertiary);
+  }
+
+  .diffAfter::before {
+    content: '변경 후 · ';
+    color: var(--text-tertiary);
+  }
+}
