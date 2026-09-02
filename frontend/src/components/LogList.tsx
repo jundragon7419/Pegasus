@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { ChevronDownIcon, ExternalLinkIcon } from '@radix-ui/react-icons'
 
 import { cx } from '@/lib/cx'
+import { formatDateTime } from '@/lib/date'
 import {
   ACTIVITY_ACTION_LABEL,
   DETAIL_FIELDS,
@@ -65,7 +66,7 @@ function LogRow({ entry, detailBase }: { entry: ActivityLog; detailBase?: string
           {ACTIVITY_ACTION_LABEL[entry.action]}
         </span>
         <span className={styles.summary}>{summarize(entry)}</span>
-        <span className={styles.time}>{formatTime(entry.createdAt)}</span>
+        <span className={styles.time}>{formatDateTime(entry.createdAt)}</span>
         {snapshot && <ChevronDownIcon className={cx(styles.chevron, open && styles.chevronOpen)} />}
       </button>
 
@@ -148,10 +149,4 @@ function DiffTable({
 function display(value: unknown): string {
   if (value === null || value === undefined || value === '') return '—'
   return String(value)
-}
-
-function formatTime(iso: string): string {
-  const d = new Date(iso)
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
 }

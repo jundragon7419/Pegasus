@@ -1,4 +1,5 @@
 import { POSTS } from '@/mocks/fixtures/posts'
+import { todayISO } from '@/lib/date'
 import type { Role } from '@/types/auth'
 import type {
   Comment,
@@ -37,7 +38,8 @@ const posts: Post[] = POSTS.map((post) => ({
 
 let nextPostId = Math.max(0, ...posts.map((p) => p.id)) + 1
 
-const today = () => new Date().toISOString().slice(0, 10)
+// 로컬 기준이어야 사용자가 보는 달력과 어긋나지 않는다(lib/date.ts)
+const today = todayISO
 
 /** 서버가 정렬한다 — 고정글 우선, 날짜 내림차순, id 내림차순. */
 function sorted(): Post[] {

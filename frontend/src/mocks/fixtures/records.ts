@@ -1,6 +1,6 @@
 /**
  * 자동 생성된 픽스처입니다. 손으로 고치지 마세요.
- * 생성기: scratchpad/gen-fixtures.mjs
+ * 생성기: `npm run gen:records` (scripts/gen-records-fixture.mjs)
  *
  * 이름과 학번은 전부 가공값입니다. 구 프로젝트 시드에는 실명과 실제 학번이
  * 들어 있어 공개 저장소에 옮길 수 없습니다. 구성(인원·역할 분포·기수 체계)만

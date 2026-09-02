@@ -10,7 +10,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "e2e": "node e2e/run.mjs",
+    "e2e:fast": "node e2e/run.mjs --fast",
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build && npm run e2e",
+    "gen:records": "node scripts/gen-records-fixture.mjs"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",
@@ -26,6 +30,7 @@
     "@vitejs/plugin-react": "^6.1.0",
     "msw": "^2.15.0",
     "oxlint": "^1.79.0",
+    "playwright": "^1.60.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2",
     "vitest": "^4.1.11"

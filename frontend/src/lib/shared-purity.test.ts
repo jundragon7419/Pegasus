@@ -24,7 +24,15 @@ const TYPE_SOURCES = import.meta.glob('../types/*.ts', {
 })
 
 /** 백엔드가 그대로 가져갈 모듈. */
-const SHARED_LIB = ['roles.ts', 'membership.ts', 'validators.ts', 'korean.ts', 'pagination.ts']
+const SHARED_LIB = [
+  'roles.ts',
+  'membership.ts',
+  'validators.ts',
+  'korean.ts',
+  'pagination.ts',
+  'date.ts',
+  'rosterNumber.ts',
+]
 
 /** 금지 대상. 프레임워크와 프론트 전용 계층이다. */
 const FORBIDDEN = [

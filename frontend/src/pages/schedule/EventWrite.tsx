@@ -10,6 +10,7 @@ import { ErrorState } from '@/components/states/ErrorState'
 import { Skeleton } from '@/components/states/Skeleton'
 import { useApiResource } from '@/hooks/useApiResource'
 import { ApiError, NetworkError, api } from '@/lib/api'
+import { datesInRange, isoMonth, todayISO } from '@/lib/date'
 import { cx } from '@/lib/cx'
 import { EVENT_TYPE_LABEL } from '@/lib/labels'
 import { ROUTES } from '@/lib/routes'
@@ -21,26 +22,10 @@ import styles from './EventWrite.module.css'
 const EVENT_TYPES: EventType[] = ['training', 'meeting', 'events', 'etc']
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1)
 
-const pad = (n: number) => String(n).padStart(2, '0')
-const todayIso = () => {
-  const d = new Date()
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-}
 
 const messageOf = (error: unknown, fallback: string) =>
   error instanceof ApiError || error instanceof NetworkError ? error.message : fallback
 
-/** 시작일부터 종료일까지 하루씩 펼친다. */
-function datesInRange(start: string, end: string): string[] {
-  const dates: string[] = []
-  const cursor = new Date(start)
-  const last = new Date(end)
-  while (cursor <= last) {
-    dates.push(`${cursor.getFullYear()}-${pad(cursor.getMonth() + 1)}-${pad(cursor.getDate())}`)
-    cursor.setDate(cursor.getDate() + 1)
-  }
-  return dates
-}
 
 export default function EventWrite() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -81,8 +66,8 @@ let nextKey = 1
 const emptyRow = (): DraftRow => ({
   key: nextKey++,
   type: 'training',
-  start: todayIso(),
-  end: todayIso(),
+  start: todayISO(),
+  end: todayISO(),
   name: '',
 })
 
@@ -263,7 +248,7 @@ function EditTab() {
   const [busy, setBusy] = useState(false)
 
   const visible = useMemo(() => {
-    const prefix = `${year}-${pad(month)}`
+    const prefix = isoMonth(year, month)
     return (events.data ?? [])
       .filter((event) => (drafts[event.id]?.date ?? event.date).startsWith(prefix))
       .sort((a, b) => a.date.localeCompare(b.date))

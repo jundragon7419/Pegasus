@@ -6,6 +6,7 @@ import { Button } from '@/components/Button'
 import { Checkbox } from '@/components/Checkbox'
 import { TextField } from '@/components/TextField'
 import { POST_TYPE_LABEL } from '@/lib/labels'
+import { addDaysISO } from '@/lib/date'
 import { canPinPostType, canUsePostType } from '@/lib/roles'
 import { ROUTES } from '@/lib/routes'
 import type { Role } from '@/types/auth'
@@ -163,7 +164,7 @@ export function PostForm({
             <div className={styles.pinRow}>
               <Checkbox
                 checked={draft.pinUntil === 'infinite'}
-                onCheckedChange={(on) => patch({ pinUntil: on ? 'infinite' : todayPlus(7) })}
+                onCheckedChange={(on) => patch({ pinUntil: on ? 'infinite' : addDaysISO(7) })}
               >
                 무기한
               </Checkbox>
@@ -285,10 +286,4 @@ export function PostForm({
       </div>
     </form>
   )
-}
-
-function todayPlus(days: number): string {
-  const d = new Date()
-  d.setDate(d.getDate() + days)
-  return d.toISOString().slice(0, 10)
 }

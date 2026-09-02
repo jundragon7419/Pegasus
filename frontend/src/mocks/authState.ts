@@ -1,4 +1,5 @@
 import { MOCK_USERS, type MockUser } from '@/mocks/fixtures/users'
+import { todayISO } from '@/lib/date'
 import type { AuthUser, StaffType, User } from '@/types/auth'
 
 export type { MockUser }
@@ -120,8 +121,8 @@ export function createUser(input: {
     membershipStatus: 'none',
     isBanned: false,
     marketingEmail: input.marketingEmail,
-    marketingAgreedAt: input.marketingEmail ? new Date().toISOString().slice(0, 10) : null,
-    createdAt: new Date().toISOString().slice(0, 10),
+    marketingAgreedAt: input.marketingEmail ? todayISO() : null,
+    createdAt: todayISO(),
   }
   users.push(user)
   return user
